@@ -89,3 +89,4 @@
 			(not (empty ?freeLocation))
 		)
 )
+)

@@ -1,0 +1,604 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass{article}
+
+    
+    
+    \usepackage{graphicx} % Used to insert images
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{color} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    
+
+    
+    
+    \definecolor{orange}{cmyk}{0,0.4,0.8,0.2}
+    \definecolor{darkorange}{rgb}{.71,0.21,0.01}
+    \definecolor{darkgreen}{rgb}{.12,.54,.11}
+    \definecolor{myteal}{rgb}{.26, .44, .56}
+    \definecolor{gray}{gray}{0.45}
+    \definecolor{lightgray}{gray}{.95}
+    \definecolor{mediumgray}{gray}{.8}
+    \definecolor{inputbackground}{rgb}{.95, .95, .85}
+    \definecolor{outputbackground}{rgb}{.95, .95, .95}
+    \definecolor{traceback}{rgb}{1, .95, .95}
+    % ansi colors
+    \definecolor{red}{rgb}{.6,0,0}
+    \definecolor{green}{rgb}{0,.65,0}
+    \definecolor{brown}{rgb}{0.6,0.6,0}
+    \definecolor{blue}{rgb}{0,.145,.698}
+    \definecolor{purple}{rgb}{.698,.145,.698}
+    \definecolor{cyan}{rgb}{0,.698,.698}
+    \definecolor{lightgray}{gray}{0.5}
+    
+    % bright ansi colors
+    \definecolor{darkgray}{gray}{0.25}
+    \definecolor{lightred}{rgb}{1.0,0.39,0.28}
+    \definecolor{lightgreen}{rgb}{0.48,0.99,0.0}
+    \definecolor{lightblue}{rgb}{0.53,0.81,0.92}
+    \definecolor{lightpurple}{rgb}{0.87,0.63,0.87}
+    \definecolor{lightcyan}{rgb}{0.5,1.0,0.83}
+    
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{HW3}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=blue,
+      linkcolor=darkorange,
+      citecolor=darkgreen,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{k+kn}{from} \PY{n+nn}{IPython.display} \PY{k+kn}{import} \PY{n}{Image}
+       \PY{k+kn}{from} \PY{n+nn}{IPython.display} \PY{k+kn}{import} \PY{n}{FileLink}\PY{p}{,} \PY{n}{FileLinks}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} 
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} 
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} 
+\end{Verbatim}
+
+
+    \section{Homework 1: Classical Planning}
+
+
+    Robot Intelligence - Planning CS 4649/7649, Fall 2014\\Instructor:
+Sungmoon Joo
+
+9/29/14 \#\# Team 3 * Siddharth Choudhary * Varun Murali * Yosef Razin *
+Ruffin White
+
+
+    \subsection{\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Towers of Hanoi
+\end{enumerate}}
+
+
+    A famous problem in classical planning is the Towers of Hanoi.
+Apparently, some priests in Vietnam are required to stack enormous discs
+from one tower to another by command of an ancient prophecy. Lets help
+them out with modern automation. The discs must always be stacked in
+order of increasing height. The goal is to move all the discs from the
+first tower to the third. Experiment with at least two different
+classical planners to solve this problem. Links to the domain are
+provided on the course web page. The page also contains links to some
+recommended planners. You are welcome and recommended to try other
+planners as well.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{Image}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Figures/Towers of Hanoi.png}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    We'll specify the relative path to each of the planners
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{planner\PYZus{}path} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{../../../Documents/Code/Planners/}\PY{l+s}{\PYZdq{}}
+       \PY{n}{blackbox}  \PY{o}{=} \PY{n}{planner\PYZus{}path} \PY{o}{+} \PY{l+s}{\PYZdq{}}\PY{l+s}{Blackbox43LinuxBinary/blackbox}\PY{l+s}{\PYZdq{}}
+       \PY{n}{satplan}   \PY{o}{=} \PY{n}{planner\PYZus{}path} \PY{o}{+} \PY{l+s}{\PYZdq{}}\PY{l+s}{SatPlan2006\PYZus{}LinuxBin/satplan}\PY{l+s}{\PYZdq{}}
+       \PY{n}{vhpop}     \PY{o}{=} \PY{n}{planner\PYZus{}path} \PY{o}{+} \PY{l+s}{\PYZdq{}}\PY{l+s}{vhpop\PYZhy{}2.2.1/vhpop}\PY{l+s}{\PYZdq{}}
+       \PY{n}{graphplan} \PY{o}{=} \PY{n}{planner\PYZus{}path} \PY{o}{+} \PY{l+s}{\PYZdq{}}\PY{l+s}{Graphplan/graphplan}\PY{l+s}{\PYZdq{}}
+       \PY{n}{pyperplan} \PY{o}{=} \PY{n}{planner\PYZus{}path} \PY{o}{+} \PY{l+s}{\PYZdq{}}\PY{l+s}{pyperplan/src/pyperplan.py}\PY{l+s}{\PYZdq{}}
+       \PY{c}{\PYZsh{} shop      = \PYZdq{}../../../Documents/Code/Planners/shop2\PYZhy{}2.9.0/\PYZdq{}}
+\end{Verbatim}
+
+    And then the relative path of the domain and problem .pddl files
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{tower\PYZus{}path} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{/home/tox/git/HW1\PYZus{}Team3/Code/Towers/}\PY{l+s}{\PYZdq{}}
+       \PY{n}{domain}   \PY{o}{=} \PY{n}{tower\PYZus{}path} \PY{o}{+} \PY{l+s}{\PYZdq{}}\PY{l+s}{hanoi\PYZhy{}domain.pddl}\PY{l+s}{\PYZdq{}}
+       \PY{n}{problem}  \PY{o}{=} \PY{n}{tower\PYZus{}path} \PY{o}{+} \PY{l+s}{\PYZdq{}}\PY{l+s}{hanoi2.pddl}\PY{l+s}{\PYZdq{}}
+\end{Verbatim}
+
+    Lets go ahead and try out the blackbox planner
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{bash} \PY{o}{\PYZhy{}}\PY{n}{s} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}blackbox}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}domain}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}problem}\PY{l+s}{\PYZdq{}}
+       \PY{err}{\PYZdl{}}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}}\PY{n}{o} \PY{err}{\PYZdl{}}\PY{l+m+mi}{2} \PY{o}{\PYZhy{}}\PY{n}{f} \PY{err}{\PYZdl{}}\PY{l+m+mi}{3} \PY{o}{\PYZhy{}}\PY{n}{solver} \PY{n}{graphplan}
+\end{Verbatim}
+
+    Ok, so that worked out. Now lets try VHPOP.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{bash} \PY{o}{\PYZhy{}}\PY{n}{s} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}vhpop}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}domain}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}problem}\PY{l+s}{\PYZdq{}}
+       \PY{err}{\PYZdl{}}\PY{l+m+mi}{1}  \PY{o}{\PYZhy{}}\PY{n}{f} \PY{n}{LCFR} \PY{o}{\PYZhy{}}\PY{n}{l} \PY{l+m+mi}{10000} \PY{o}{\PYZhy{}}\PY{n}{f} \PY{n}{MW} \PY{o}{\PYZhy{}}\PY{n}{l} \PY{n}{unlimited} \PY{err}{\PYZdl{}}\PY{l+m+mi}{2} \PY{err}{\PYZdl{}}\PY{l+m+mi}{3}
+\end{Verbatim}
+
+
+    \subsubsection{\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Explain the method by which each of the two planners finds a solution.
+\end{enumerate}}
+
+
+    The first planner applied, Blackbox, is a planning system that compbines
+satplan and graphplan. Basicly, it parses the PDDL files specified with
+STRIPS notation into a Boolean, or propositional, satisfiability problem
+and then applies several diffrent types of satisfiability engines. The
+name blackbox refers to that the plan generator and the SAT solver know
+nothing about eachother, thus premitting a flexable sytem to try out
+diffrent engines to use. The perticular solver used here is just
+graphplan with defoult perameters.
+
+The second planner applied, VHPOP is a partial order causal link (POCL)
+planner loosely based on UCPOP from University of Washington. Written by
+Håkan L. S. Younes, VHPOP gained reconition durring 3rd International
+Planning Competition (2002) as Best Newcomer and thus reviving the study
+partial order planning.
+
+
+    \subsubsection{\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{1}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Which planner was fastest?
+\end{enumerate}}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} 
+\end{Verbatim}
+
+
+    \subsubsection{\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{2}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Explain why the winning planner might be more effective on this
+  problem.
+\end{enumerate}}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} 
+\end{Verbatim}
+
+
+    \subsection{\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{1}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Sokoban PDDL
+\end{enumerate}}
+
+
+    During the times of Pong, Pac-Man and Tetris, Hiroyuki Imabayashi
+created an complex game that tested the human abilities of planning:
+Sokoban. Many folks are still addicted to solving Sokoban puzzles and
+you can join them by playing any of the versions freely distributed on
+the web. The goal is for the human, or robot, to push all the boxes into
+the desired locations. The robot can move horizontally and vertically
+and push one box at a time.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{Image}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Figures/Sokoban 1.png}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    Describe the Sokoban domain in PDDL. For each of the problems in Figure
+2, define the problem in PDDL. You can either use the target lettering
+given in the picture or let the planner move any box to any target
+square. For the challenge problem, any box in any location is a
+solution. In the challenge, PDDL should NOT inform the robot which box
+should go to which location. In addition you may also try other problems
+you invent or find on the web. How well do your two planners perform on
+these problems? If no planner seems to be solving it, perhaps you should
+consider a different method for defining your problems.
+
+
+    \subsubsection{\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Show successful plans from at least one planner on the three Sokoban
+  problems in Figure 2(1-3). The challenge problem is optional.
+\end{enumerate}}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{o}{\PYZpc{}}\PY{k}{run} \PY{l+s}{\PYZsq{}}\PY{l+s}{Scratch Book.ipynb}\PY{l+s}{\PYZsq{}}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{world\PYZus{}path} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{/home/tox/git/HW1\PYZus{}Team3/Code/Worlds/}\PY{l+s}{\PYZdq{}}
+       
+       \PY{n}{domain}   \PY{o}{=} \PY{n}{world\PYZus{}path} \PY{o}{+} \PY{l+s}{\PYZdq{}}\PY{l+s}{sokoban\PYZus{}domain.pddl}\PY{l+s}{\PYZdq{}}
+       \PY{n}{world}    \PY{o}{=} \PY{n}{world\PYZus{}path} \PY{o}{+} \PY{l+s}{\PYZdq{}}\PY{l+s}{world1.txt}\PY{l+s}{\PYZdq{}}
+       \PY{n}{problem}  \PY{o}{=} \PY{n}{world\PYZus{}path} \PY{o}{+} \PY{l+s}{\PYZdq{}}\PY{l+s}{world1\PYZus{}proble.pddl}\PY{l+s}{\PYZdq{}}
+       \PY{n}{solution} \PY{o}{=} \PY{n}{world\PYZus{}path} \PY{o}{+} \PY{l+s}{\PYZdq{}}\PY{l+s}{world1\PYZus{}proble.pddl.soln}\PY{l+s}{\PYZdq{}}
+       \PY{n}{graph}    \PY{o}{=} \PY{n}{world\PYZus{}path} \PY{o}{+} \PY{l+s}{\PYZdq{}}\PY{l+s}{world1\PYZus{}proble.png}\PY{l+s}{\PYZdq{}}
+       
+       \PY{n}{sokoban} \PY{o}{=} \PY{n}{Sokoban}\PY{p}{(}\PY{n}{world}\PY{p}{,} \PY{n}{labeled\PYZus{}boxes} \PY{o}{=} \PY{n+nb+bp}{False}\PY{p}{)}
+       \PY{n}{sokoban}\PY{o}{.}\PY{n}{writeProblem}\PY{p}{(}\PY{n}{problem}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{bash} \PY{o}{\PYZhy{}}\PY{n}{s} \PY{l+s}{\PYZdq{}}\PY{l+s}{cat}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}domain}\PY{l+s}{\PYZdq{}}
+       \PY{err}{\PYZdl{}}\PY{l+m+mi}{1} \PY{err}{\PYZdl{}}\PY{l+m+mi}{2}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{bash} \PY{o}{\PYZhy{}}\PY{n}{s} \PY{l+s}{\PYZdq{}}\PY{l+s}{cat}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}world}\PY{l+s}{\PYZdq{}}
+       \PY{err}{\PYZdl{}}\PY{l+m+mi}{1} \PY{err}{\PYZdl{}}\PY{l+m+mi}{2}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{bash} \PY{o}{\PYZhy{}}\PY{n}{s} \PY{l+s}{\PYZdq{}}\PY{l+s}{cat}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}problem}\PY{l+s}{\PYZdq{}}
+       \PY{err}{\PYZdl{}}\PY{l+m+mi}{1} \PY{err}{\PYZdl{}}\PY{l+m+mi}{2}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{bash} \PY{o}{\PYZhy{}}\PY{n}{s} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}blackbox}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}domain}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}problem}\PY{l+s}{\PYZdq{}}
+       \PY{err}{\PYZdl{}}\PY{l+m+mi}{1} \PY{o}{\PYZhy{}}\PY{n}{o} \PY{err}{\PYZdl{}}\PY{l+m+mi}{2} \PY{o}{\PYZhy{}}\PY{n}{f} \PY{err}{\PYZdl{}}\PY{l+m+mi}{3}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{bash} \PY{o}{\PYZhy{}}\PY{n}{s} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}vhpop}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}domain}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}problem}\PY{l+s}{\PYZdq{}}
+       \PY{err}{\PYZdl{}}\PY{l+m+mi}{1}  \PY{o}{\PYZhy{}}\PY{n}{f} \PY{n}{LCFR} \PY{o}{\PYZhy{}}\PY{n}{l} \PY{l+m+mi}{10000} \PY{o}{\PYZhy{}}\PY{n}{f} \PY{n}{MW} \PY{o}{\PYZhy{}}\PY{n}{l} \PY{n}{unlimited} \PY{err}{\PYZdl{}}\PY{l+m+mi}{2} \PY{err}{\PYZdl{}}\PY{l+m+mi}{3}
+\end{Verbatim}
+
+    Well, VHPOP never seamed to be able to finish this example under 15 min,
+so lets try somthingelse.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{bash} \PY{o}{\PYZhy{}}\PY{n}{s} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}pyperplan}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}domain}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}problem}\PY{l+s}{\PYZdq{}}
+       \PY{err}{\PYZdl{}}\PY{l+m+mi}{1} \PY{err}{\PYZdl{}}\PY{l+m+mi}{2} \PY{err}{\PYZdl{}}\PY{l+m+mi}{3} \PY{err}{\PYZdl{}}\PY{l+m+mi}{4} \PY{o}{\PYZhy{}}\PY{o}{\PYZhy{}}\PY{n}{plugins} \PY{n}{visualizer} \PY{o}{\PYZhy{}}\PY{n}{s} \PY{n}{bfs}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{bash} \PY{o}{\PYZhy{}}\PY{n}{s} \PY{l+s}{\PYZdq{}}\PY{l+s}{cat}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}solution}\PY{l+s}{\PYZdq{}}
+       \PY{err}{\PYZdl{}}\PY{l+m+mi}{1} \PY{err}{\PYZdl{}}\PY{l+m+mi}{2}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{Image}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Worlds\PYZhy{}bfs\PYZhy{}hff\PYZhy{}world1\PYZus{}proble.png}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{domain}   \PY{o}{=} \PY{n}{world\PYZus{}path} \PY{o}{+} \PY{l+s}{\PYZdq{}}\PY{l+s}{sokoban\PYZus{}domain.pddl}\PY{l+s}{\PYZdq{}}
+       \PY{n}{world}    \PY{o}{=} \PY{n}{world\PYZus{}path} \PY{o}{+} \PY{l+s}{\PYZdq{}}\PY{l+s}{world2.txt}\PY{l+s}{\PYZdq{}}
+       \PY{n}{problem}  \PY{o}{=} \PY{n}{world\PYZus{}path} \PY{o}{+} \PY{l+s}{\PYZdq{}}\PY{l+s}{world2\PYZus{}proble.pddl}\PY{l+s}{\PYZdq{}}
+       \PY{n}{solution} \PY{o}{=} \PY{n}{world\PYZus{}path} \PY{o}{+} \PY{l+s}{\PYZdq{}}\PY{l+s}{world2\PYZus{}proble.pddl.soln}\PY{l+s}{\PYZdq{}}
+       
+       \PY{n}{sokoban} \PY{o}{=} \PY{n}{Sokoban}\PY{p}{(}\PY{n}{world}\PY{p}{,} \PY{n}{labeled\PYZus{}boxes} \PY{o}{=} \PY{n+nb+bp}{False}\PY{p}{)}
+       \PY{n}{sokoban}\PY{o}{.}\PY{n}{writeProblem}\PY{p}{(}\PY{n}{problem}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{bash} \PY{o}{\PYZhy{}}\PY{n}{s} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}pyperplan}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}domain}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}problem}\PY{l+s}{\PYZdq{}}
+       \PY{err}{\PYZdl{}}\PY{l+m+mi}{1} \PY{err}{\PYZdl{}}\PY{l+m+mi}{2} \PY{err}{\PYZdl{}}\PY{l+m+mi}{3} \PY{err}{\PYZdl{}}\PY{l+m+mi}{4} \PY{o}{\PYZhy{}}\PY{o}{\PYZhy{}}\PY{n}{plugins} \PY{n}{visualizer}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{bash} \PY{o}{\PYZhy{}}\PY{n}{s} \PY{l+s}{\PYZdq{}}\PY{l+s}{cat}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}solution}\PY{l+s}{\PYZdq{}}
+       \PY{err}{\PYZdl{}}\PY{l+m+mi}{1} \PY{err}{\PYZdl{}}\PY{l+m+mi}{2}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{Image}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Worlds\PYZhy{}bfs\PYZhy{}hff\PYZhy{}world2\PYZus{}proble.png}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{bash} \PY{o}{\PYZhy{}}\PY{n}{s} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}pyperplan}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}domain}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}problem}\PY{l+s}{\PYZdq{}}
+       \PY{err}{\PYZdl{}}\PY{l+m+mi}{1} \PY{err}{\PYZdl{}}\PY{l+m+mi}{2} \PY{err}{\PYZdl{}}\PY{l+m+mi}{3} \PY{err}{\PYZdl{}}\PY{l+m+mi}{4} \PY{o}{\PYZhy{}}\PY{o}{\PYZhy{}}\PY{n}{plugins} \PY{n}{visualizer} \PY{o}{\PYZhy{}}\PY{n}{H} \PY{n}{hff} \PY{o}{\PYZhy{}}\PY{n}{s} \PY{n}{gbf}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{Image}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Worlds\PYZhy{}gbf\PYZhy{}hff\PYZhy{}world2\PYZus{}proble.png}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{domain}   \PY{o}{=} \PY{n}{world\PYZus{}path} \PY{o}{+} \PY{l+s}{\PYZdq{}}\PY{l+s}{sokoban\PYZus{}domain.pddl}\PY{l+s}{\PYZdq{}}
+       \PY{n}{world}    \PY{o}{=} \PY{n}{world\PYZus{}path} \PY{o}{+} \PY{l+s}{\PYZdq{}}\PY{l+s}{world3.txt}\PY{l+s}{\PYZdq{}}
+       \PY{n}{problem}  \PY{o}{=} \PY{n}{world\PYZus{}path} \PY{o}{+} \PY{l+s}{\PYZdq{}}\PY{l+s}{world3\PYZus{}proble.pddl}\PY{l+s}{\PYZdq{}}
+       \PY{n}{solution} \PY{o}{=} \PY{n}{world\PYZus{}path} \PY{o}{+} \PY{l+s}{\PYZdq{}}\PY{l+s}{world3\PYZus{}proble.pddl.soln}\PY{l+s}{\PYZdq{}}
+       
+       \PY{n}{sokoban} \PY{o}{=} \PY{n}{Sokoban}\PY{p}{(}\PY{n}{world}\PY{p}{,} \PY{n}{labeled\PYZus{}boxes} \PY{o}{=} \PY{n+nb+bp}{False}\PY{p}{)}
+       \PY{n}{sokoban}\PY{o}{.}\PY{n}{writeProblem}\PY{p}{(}\PY{n}{problem}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{bash} \PY{o}{\PYZhy{}}\PY{n}{s} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}pyperplan}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}domain}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}problem}\PY{l+s}{\PYZdq{}}
+       \PY{err}{\PYZdl{}}\PY{l+m+mi}{1} \PY{err}{\PYZdl{}}\PY{l+m+mi}{2} \PY{err}{\PYZdl{}}\PY{l+m+mi}{3} \PY{err}{\PYZdl{}}\PY{l+m+mi}{4} \PY{o}{\PYZhy{}}\PY{o}{\PYZhy{}}\PY{n}{plugins} \PY{n}{visualizer}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{bash} \PY{o}{\PYZhy{}}\PY{n}{s} \PY{l+s}{\PYZdq{}}\PY{l+s}{cat}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}solution}\PY{l+s}{\PYZdq{}}
+       \PY{err}{\PYZdl{}}\PY{l+m+mi}{1} \PY{err}{\PYZdl{}}\PY{l+m+mi}{2}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{Image}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Worlds\PYZhy{}bfs\PYZhy{}hff\PYZhy{}world3\PYZus{}proble.png}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{bash} \PY{o}{\PYZhy{}}\PY{n}{s} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}pyperplan}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}domain}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}problem}\PY{l+s}{\PYZdq{}}
+       \PY{err}{\PYZdl{}}\PY{l+m+mi}{1} \PY{err}{\PYZdl{}}\PY{l+m+mi}{2} \PY{err}{\PYZdl{}}\PY{l+m+mi}{3} \PY{err}{\PYZdl{}}\PY{l+m+mi}{4} \PY{o}{\PYZhy{}}\PY{o}{\PYZhy{}}\PY{n}{plugins} \PY{n}{visualizer} \PY{o}{\PYZhy{}}\PY{n}{H} \PY{n}{hff} \PY{o}{\PYZhy{}}\PY{n}{s} \PY{n}{gbf}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{Image}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{Worlds\PYZhy{}gbf\PYZhy{}hff\PYZhy{}world3\PYZus{}proble.png}\PY{l+s}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{n}{world}    \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Worlds/world4.txt}\PY{l+s}{\PYZdq{}}
+       \PY{n}{problem}  \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Worlds/world4\PYZus{}proble.pddl}\PY{l+s}{\PYZdq{}}
+       \PY{n}{solution} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Worlds/world4\PYZus{}proble.pddl.soln}\PY{l+s}{\PYZdq{}}
+       \PY{c}{\PYZsh{} sokoban = Sokoban(world, labeled\PYZus{}boxes = False)}
+       \PY{c}{\PYZsh{} sokoban.writeProblem(problem)}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} \PY{o}{\PYZpc{}\PYZpc{}}\PY{k}{bash} \PY{o}{\PYZhy{}}\PY{n}{s} \PY{l+s}{\PYZdq{}}\PY{l+s}{cat}\PY{l+s}{\PYZdq{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdl{}solution}\PY{l+s}{\PYZdq{}}
+       \PY{err}{\PYZdl{}}\PY{l+m+mi}{1} \PY{err}{\PYZdl{}}\PY{l+m+mi}{2}
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} 
+\end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} 
+\end{Verbatim}
+
+
+    \subsubsection{\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{1}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Compare the performance of two planners on this domain. Which one
+  works better? Does this make sense, why?
+\end{enumerate}}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} 
+\end{Verbatim}
+
+
+    \subsubsection{\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{2}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  Clearly PDDL was not intended for this sort of application. Discuss
+  the challenges in expressing geometric constraints in semantic
+  planning.
+\end{enumerate}}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} 
+\end{Verbatim}
+
+
+    \subsubsection{\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{3}
+\itemsep1pt\parskip0pt\parsep0pt
+\item
+  In many cases, geometric and dynamic planning are insufficient to
+  describe a domain. Give an example of a problem that is best suited
+  for sematic (classical) planning. Explain why a semantic
+  representation would be desirable.
+\end{enumerate}}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}}]:} 
+\end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
