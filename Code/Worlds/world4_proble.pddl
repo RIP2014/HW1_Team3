@@ -156,9 +156,27 @@ r7-c0 r7-c1 r7-c2 r7-c3 r7-c4 r7-c5 r7-c6
 )
 ; Define goal states
 (:goal (and 
-		(not (empty r4-c2)) (not (robot-at r4-c2))
-		(not (empty r4-c3)) (not (robot-at r4-c3))
-		(not (empty r4-c4)) (not (robot-at r4-c4))
+		(empty r1-c3)
+		(empty r1-c4)
+		
+		(empty r2-c3)
+		(empty r2-c4)
+		
+		(empty r3-c1)
+		(empty r3-c2)
+		(robot-at r3-c3)
+		(empty r3-c4)
+		(empty r3-c5)
+		
+		(empty r4-c1)
+		(empty r4-c5)
+		
+		(empty r5-c2)
+		(empty r5-c3)
+		(empty r5-c4)
+		
+		(empty r6-c2)
+		(empty r6-c3)
 	)
 )
 
