@@ -1,0 +1,8 @@
+:movable
+	ROBOT
+	BOX
+:rules
+	:movement
+		ROBOT	1 X if NOT OCCUPIED;
+			OR 1 Y if NOT OCCUPIED;
+			OR 1 X if ADJACENT BOX AND BOX NOT ADJACENT TO BOX
