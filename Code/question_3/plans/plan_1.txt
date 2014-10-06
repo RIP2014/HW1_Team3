@@ -1,0 +1,23 @@
+Time Elapsed: 54 milliseconds
+Number Explored: 107
+
+Number of moves: 18
+Robot Position: 2, 2
+Robot Position: 2, 3
+Robot Position: 2, 4
+Robot Position: 2, 5
+Robot Position: 1, 5
+Robot Position: 1, 4
+Robot Position: 1, 3
+Robot Position: 2, 3
+Robot Position: 3, 3
+Robot Position: 3, 4
+Robot Position: 4, 4
+Robot Position: 5, 4
+Robot Position: 5, 3
+Robot Position: 4, 3
+Robot Position: 3, 3
+Robot Position: 3, 4
+Robot Position: 2, 4
+Robot Position: 2, 3
+
