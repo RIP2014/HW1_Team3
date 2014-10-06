@@ -2,7 +2,7 @@
 (define (domain sokoban)
 
 ; Our sokoban domain declares the most basic subset of PDDL, consisting of STRIPS as the only requirements
-(:requirements :strips)
+(:requirements :strips :adl)
 
 ; For our predicates, we'll specify the name and number of arguments used for each
 (:predicates
