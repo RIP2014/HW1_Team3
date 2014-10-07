@@ -7,9 +7,13 @@
 #include <stack>
 #include <mutex>
 #include "sokobanplanner.h"
+#include <fstream>
+#include <string>
 
 bool verbose = false;
 uint64_t iteration =0;
+bool use_tree_filter = false;
+int nBoxes = 0;
 
 class varunPlanner
 {
@@ -17,11 +21,13 @@ public:
 private:
 };
 
-int width=7;
+int width=11;
 int height=8;
 
 int var_width;
 int var_height;
+
+int closestRobot=0;
 
 boost::multi_array<int, 2> gameboard(boost::extents[height][width]);
 
@@ -29,7 +35,7 @@ boost::multi_array<int, 2> gameboard(boost::extents[height][width]);
 
 
 
-int gains[] = {8,1,1};
+int gains[] = {14,3,6};
 
 
 struct state_compare
@@ -55,7 +61,7 @@ struct _compare
 
 boost::heap::fibonacci_heap<state, boost::heap::compare<state_compare> > state_frontier;
 std::mutex state_frontier_mutex;
-std::set<state, _compare> searched;
+//std::set<state, _compare> searched;
 
 boost::heap::fibonacci_heap<state, boost::heap::compare<state_compare>> explored;
 std::mutex explored_mutex;
@@ -128,6 +134,7 @@ bool check_explored(state currentState)
 void printBoard(state gameboard)
 {
     //std::cout << "Iteration: " << iteration << std::endl;
+    std::cout << "height" << height << std::endl;
     for (int m=0; m<height; m++)
     {
        for (int n=0; n<width; n++)
@@ -195,16 +202,19 @@ int calculateCost(state currentState)
     //std::cout << "Starte calculating cost" << std::endl;
     //return 100;
     uint32_t cost;
+    if (currentState.nBranch < closestRobot)   gains[1] = 30;
+    else gains[1] = 2;
     for (int i=0; i<3; i++)
     {
-        //for (int j=0; j<3; j++)
-        //{
-            //cost += gains[1] * (goal_position[i].y-currentState.robot_position.y + goal_position[i].x-currentState.robot_position.x);
-            //cost += gains[0] * (goal_position[i].y-currentState.box_position[i].y + goal_position[i].x-currentState.box_position[i].x);
-        //}
+	cost += gains[1] * (currentState.box_position[i].y-currentState.robot_position.y + currentState.box_position[i].x-currentState.robot_position.x);
+        for (int j=0; j<3; j++)
+        {
+            
+            cost += gains[0] * (goal_position[j].y-currentState.box_position[i].y + goal_position[j].x-currentState.box_position[i].x);
+        }
     }
     //std::cout << "Done calculating cost" << std::endl;
-    cost += currentState.cost;
+    cost += gains[2] * currentState.cost;
     //cost += gains[2] * currentState.nBranch;
     //std::cout << "Done calculating cost" << std::endl;
     return cost;
@@ -215,9 +225,9 @@ void makeMove(state * currentState, position pos1, position pos2)
    // std::cout << "Moving .. " << std::endl;
    // std::cout << "Robot Position X: " << currentState->robot_position.x << std::endl;
    // std::cout << "Cost: " << currentState->cost << std::endl;
-    printBoard(*currentState);
+    //printBoard(*currentState);
     currentState->plan.push(pos2);
-    //currentState->nBranch ++;
+    currentState->nBranch ++;
     if (currentState->gameboard[pos2.y][pos2.x] == 0)
 	{
         currentState->gameboard[pos2.y][pos2.x] = 5;
@@ -282,10 +292,10 @@ bool checkGoal(state currentState)
     for (int i = 0; i < 3; i++)
         for (int j =0; j < 3; j++)
     {
-        if (currentState.box_position[j].x == goal_position[i].x && currentState.box_position[j].y == goal_position[i].y)   count ++;
+            if (goal_position[i].x != 0)  if (currentState.box_position[j].x == goal_position[i].x && currentState.box_position[j].y == goal_position[i].y)   count ++;
     }
-    //std::cout << "Count:   " << count << std::endl;
-    if (count == 3) return 1;
+    std::cout << "Goal Count:   " << count << std::endl;
+    if (count >= nBoxes) return 1;
     else return 0;
     //if (currentState.box_position[0].x == goal_position[0].x && currentState.box_position[0].y == goal_position[0].y)  return 1;
     //else return 0;
@@ -293,17 +303,28 @@ bool checkGoal(state currentState)
 
 int treeFilter(state currentState)
 {
+    if (!use_tree_filter) return 0;
     int count = 0;
-    for (int i=0; i< 3; i++)
+    std::cout << "Trying to filter tree" << std::endl;
+    try
     {
-        count = 0;
-        if (currentState.gameboard[currentState.box_position[i].y+1][currentState.box_position[i].x] == 1 )  count ++;
-        if (currentState.gameboard[currentState.box_position[i].y][currentState.box_position[i].x+1] == 1 )  count ++;
-        if (currentState.gameboard[currentState.box_position[i].y-1][currentState.box_position[i].x] == 1 )  count ++;
-        if (currentState.gameboard[currentState.box_position[i].y][currentState.box_position[i].x-1] == 1 )  count ++;
-        //std::cout << "Count is: " << count << std::endl;
-        if (count >=2) return 1;
+        for (int i=0; i< 3; i++)
+        {
+            count = 0;
+            if (currentState.gameboard[currentState.box_position[i].y+1][currentState.box_position[i].x] == 1 )  count ++;
+            if (currentState.gameboard[currentState.box_position[i].y][currentState.box_position[i].x+1] == 1 )  count ++;
+            if (currentState.gameboard[currentState.box_position[i].y-1][currentState.box_position[i].x] == 1 )  count ++;
+            if (currentState.gameboard[currentState.box_position[i].y][currentState.box_position[i].x-1] == 1 )  count ++;
+            //std::cout << "Count is: " << count << std::endl;
+            if (count >=2) return 1;
+        }
+        std::cout << "Done Filtering" << std::endl;
+     }
+     catch (int e)
+     {
+        ;
     }
+
     return 0;
 }
 
@@ -339,7 +360,7 @@ int generateMove()
      //board.parent = &static_cast<state>(state_frontier.top());
      state_frontier.pop();
      //state_frontier_mutex.unlock();
-     //std::cout << "nBranch:  " << board.nBranch << std::endl;
+     std::cout << "nBranch:  " << board.nBranch << std::endl;
      position move;
      move.x = board.robot_position.x;
      move.y = board.robot_position.y;
@@ -417,6 +438,7 @@ int generateMove()
           }
 
      //explored_mutex.lock();
+     if (verbose)    std::cout << "Pushing to explored" <<std::endl;
      explored.push(board);
      //explored_mutex.unlock();
      return 1;
@@ -434,12 +456,14 @@ void initBoard()
     //p.setHeight(8);
     //p.setWidth(7);
 
-    int m=8,n=7;
+    int m=7,n=7;
     state initState;
-    initState.gameboard.resize(boost::extents[m][n]);
+    initState.gameboard.resize(boost::extents[height][width]);
 
     // Question 2.1
-    /*int temp[7][7] = {
+
+    /*
+    int temp[7][7] = {
         {1,1,1,1,0,0,0},
         {1,0,0,1,0,0,0},
         {1,1,5,1,1,1,1},
@@ -447,8 +471,8 @@ void initBoard()
         {1,0,0,2,0,0,1},
         {1,0,0,1,1,1,1},
         {1,1,1,0,0,0,0},
-    };*/
-
+    };
+*/
     //Question 2.2
 /*
     int temp [8][6] = {
@@ -462,6 +486,20 @@ void initBoard()
         {0,0,0,1,1,1},
     };
 */
+
+    //Question 2.3
+
+    int temp [8][11] = {
+        {0,0,0,0,0,0,1,1,1,1,1},
+        {0,0,0,0,0,0,1,0,0,0,1},
+        {0,0,0,0,0,0,1,0,1,0,1},
+        {1,1,1,1,1,1,1,0,1,0,1},
+        {1,0,5,0,2,0,3,0,4,0,1},
+        {1,0,1,0,1,0,1,0,1,1,1},
+        {1,0,0,0,0,0,0,0,1,0,0},
+        {1,1,1,1,1,1,1,1,1,0,0},
+    };
+    /*
     //Question 2.3
     int temp [8][7] = {
         {0,0,1,1,1,1,0},
@@ -472,7 +510,7 @@ void initBoard()
         {1,1,3,0,0,1,1},
         {0,1,0,0,1,1,0},
         {0,1,1,1,1,0,1}
-    };
+    };*/
      /*int temp[8][7] = {
                     {0,0,1,1,1,1,0},
             {0,0,1,0,0,1,0},
@@ -486,19 +524,21 @@ void initBoard()
          for (n=0; n<width; n++)
           initState.gameboard[m][n] = temp[m][n];
      //initState.parent = &initState;
-     //initState.nBranch = 0;
-     initState.robot_position.x = 5; initState.robot_position.y = 3;
-     initState.box_position[0].x   = 2; initState.box_position[0].y = 3;
-     goal_position[0].x = 2;
-     goal_position[0].y = 4;
-     initState.box_position[1].x   = 2; initState.box_position[1].y = 5;
-     goal_position[1].x = 3;
-     goal_position[1].y = 4;
-     initState.box_position[2].x   = 3; initState.box_position[2].y = 2;
-     goal_position[2].x = 4;
-     goal_position[2].y = 4;
+     initState.nBranch = 0;
+     initState.robot_position.x = 2; initState.robot_position.y = 4;
+     initState.box_position[0].x   = 6; initState.box_position[0].y = 4;
+     goal_position[0].x = 7;
+     goal_position[0].y = 1;
+     initState.box_position[1].x   = 8; initState.box_position[1].y = 4;
+     goal_position[1].x = 7;
+     goal_position[1].y = 2;
+     initState.box_position[2].x   = 4; initState.box_position[2].y = 4;
+     goal_position[2].x = 7;
+     goal_position[2].y = 3;
      state_frontier.push(initState);
-     searched.insert(initState);
+     closestRobot = 3;
+     nBoxes = 3;
+     //searched.insert(initState);
      std::cout << "Initial State" <<std::endl;
      printBoard(initState);
 }
@@ -547,18 +587,18 @@ void search()
 void joinThreads()
 {
         //generateMove();
-        std::thread first(search);
+        //std::thread first(search);
         //std::thread second(search);
         //std::this_thread::sleep_for(std::chrono::microseconds(10000));
         //std::thread third(search);
         //std::thread fourth(search);
 
-        first.join();
+        //first.join();
         //std::this_thread::sleep_for(std::chrono::microseconds(10000));
         //second.join();
         //third.join();
         //fourth.join();
-
+	search();
         while (!goalFound);
 }
 
@@ -583,6 +623,97 @@ int main()
 {
    sokobanPlanner p;
    initBoard();
+   std::string line;
+   std::ifstream file("../problems/q1.txt");
+   position box_position[0];
+   int value;
+   int count_box = 0;
+   int count_goal_position = 0;
+   state initialState;
+   if (file.is_open())
+   {
+       while (std::getline(file,line))
+       {
+           std::cout << line << std::endl;
+           if (line == "nBoxes")
+           {
+               std::cout << "reading nBoxes" <<std::endl;
+               std::getline(file,line);
+               std::cout << line << std::endl;
+               nBoxes = std::stoi (line);
+               std::cout << "Done updating nBoxes" << std::endl;
+           }
+           if (line == "box_position")
+           {
+               std::cout << "Reading box position" << std::endl;
+               std::getline(file,line);
+               box_position[count_box].x = std::stoi (line);
+
+               std::getline(file,line);
+               box_position[count_box].y = std::stoi (line);
+               std::cout << "Done reading box position" <<std::endl;
+               count_box++;
+           }
+
+           if (line == "robot_position")
+           {
+               std::getline(file,line);
+               robot_position.x = std::stoi (line);
+               std::getline(file,line);
+               robot_position.y = std::stoi (line);
+           }
+           if (line == "goal_position")
+           {
+               std::getline(file,line);
+               goal_position[count_goal_position].x = std::stoi (line);
+               std::getline(file,line);
+               goal_position[count_goal_position].y = std::stoi (line);
+               count_goal_position ++;
+           }
+
+           if (line == "width")
+           {
+               std::getline(file,line);
+               width = std::stoi(line);
+           }
+
+           if (line == "height")
+           {
+               std::getline(file,line);
+               height = std::stoi(line);
+           }
+
+           if (line == "state")
+           {
+               initialState.gameboard.resize (boost::extents[height][width]);
+               std::cout << "reading state" <<std::endl;
+               while (std::getline (file,line))
+               {
+
+                for(int i= 0; i<height; i++)
+                {
+                    std::istringstream iss(line);
+                    for (int j=0; j<width; j++)
+                    {
+                        iss >> value;
+                        std::cout << value <<std::endl;
+                        initialState.gameboard[i][j] = value;
+                        std::cout << "Gameboard" << initialState.gameboard[i][j] << std::endl;
+                        std::cout << i << j << std::endl;
+                    }
+                }
+               }
+           }
+
+
+
+
+       }
+   }
+   std::cout << height <<std::endl;
+   std::cout << width << std::endll;
+   std::cout << initialState.gameboard[7][10] << std::endl;
+   printBoard(initialState);
    uint64_t count = 0;
    //std::thread first(search);
    //std::thread second(threadLoop);
