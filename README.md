@@ -29,7 +29,7 @@ Repository of Team#3 for HW1
  * You can view the notebook by simply using nbviewer render the .ipynb file in your browser
  * http://nbviewer.ipython.org/github/RIP2014/HW1_Team3/blob/master/Code/HW3.ipynb
 * Run the notebook
-  * You open and run the notebook by launching a iptyhon kernel in the same directory as the HW3.ipynb
+  * You open and run the notebook by launching a ipython kernel in the same directory as the HW3.ipynb
   * `$ cd Code/`
   * `$ ipython3 notebook`
   * your browser should launch a new tab. Click on the HW3.ipynb notebook to start it
