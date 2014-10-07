@@ -22,7 +22,7 @@ Repository of Team#3 for HW1
 
 ## C++
 * [boost](http://www.boost.org/)
-  * `ssudo apt-get install libboost-all-dev`
+  * `sudo apt-get install libboost-all-dev`
 
 # How to
 * View the notebook
@@ -44,5 +44,5 @@ This work was done by Team 3:
 * Varun Murali
 * Yosef Razin
 * Ruffin White
-* 
+
 with each contributing equally to the work done and final document.
