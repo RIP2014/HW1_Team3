@@ -1,0 +1,36 @@
+nBoxes
+3
+box_position
+3
+2
+box_position
+2
+3
+box_position
+2
+5
+robot_position
+5
+3
+height
+8
+width
+7
+goal_position
+2
+2
+goal_position
+3
+4
+goal_position
+4
+4
+state
+0 0 1 1 1 1 0  
+0 0 1 0 0 1 0  
+1 1 1 4 0 1 0  
+1 0 2 0 0 5 1  
+1 0 0 0 0 0 1  
+1 1 3 0 0 1 1  
+0 1 0 0 1 1 0  
+0 1 1 1 1 0 1 
